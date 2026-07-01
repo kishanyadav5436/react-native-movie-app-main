@@ -10,19 +10,21 @@ const TrendingCard = ({
 }: TrendingCardProps) => {
   return (
     <Link href={`/movie/${movie_id}`} asChild>
-      <TouchableOpacity className="w-32 relative pl-5">
-        <Image
-          source={{
-            uri:
-              poster_url && poster_url !== "N/A"
-                ? poster_url
-                : "https://placehold.co/300x450/1a1a1a/FFFFFF.png",
-          }}
-          className="w-32 h-48 rounded-lg"
-          resizeMode="cover"
-        />
+      <TouchableOpacity className="w-36 relative pl-5" activeOpacity={0.7}>
+        <View className="rounded-xl overflow-hidden border border-dark-100">
+          <Image
+            source={{
+              uri:
+                poster_url && poster_url !== "N/A"
+                  ? poster_url
+                  : "https://placehold.co/300x450/1a1a1a/FFFFFF.png",
+            }}
+            className="w-36 h-52 rounded-xl"
+            resizeMode="cover"
+          />
+        </View>
 
-        <View className="absolute bottom-9 -left-3.5 px-2 py-1 rounded-full">
+        <View className="absolute bottom-12 -left-3.5 px-2 py-1 rounded-full">
           <MaskedView
             maskElement={
               <Text className="font-bold text-white text-6xl">{index + 1}</Text>
@@ -37,7 +39,7 @@ const TrendingCard = ({
         </View>
 
         <Text
-          className="text-sm font-bold mt-2 text-light-200"
+          className="text-sm font-bold mt-2 text-light-100"
           numberOfLines={2}
         >
           {title}

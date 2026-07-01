@@ -61,7 +61,7 @@ const Search = () => {
         columnWrapperStyle={{
           justifyContent: "flex-start",
           gap: 16,
-          marginVertical: 16,
+          marginVertical: 14,
         }}
         contentContainerStyle={{ paddingBottom: 100 }}
         ListHeaderComponent={
@@ -72,44 +72,60 @@ const Search = () => {
 
             <View className="my-5">
               <SearchBar
-                placeholder="Search for a movie"
+                placeholder="Search movies, shows, actors..."
                 value={searchQuery}
                 onChangeText={handleSearch}
               />
             </View>
 
             {loading && (
-              <ActivityIndicator
-                size="large"
-                color="#0000ff"
-                className="my-3"
-              />
+              <View className="flex-row items-center justify-center my-4">
+                <ActivityIndicator size="small" color="#AB8BFF" />
+                <Text className="text-light-200 ml-3 text-sm">
+                  Searching...
+                </Text>
+              </View>
             )}
 
             {error && (
-              <Text className="text-red-500 px-5 my-3">
-                Error: {error.message}
-              </Text>
+              <View className="bg-dark-200 rounded-xl px-4 py-3 my-3 border border-dark-100">
+                <Text className="text-red-400 text-sm">
+                  ⚠️ {error.message}
+                </Text>
+              </View>
             )}
 
             {!loading &&
               !error &&
               searchQuery.trim() &&
               movies?.length! > 0 && (
-                <Text className="text-xl text-white font-bold">
-                  Search Results for{" "}
-                  <Text className="text-accent">{searchQuery}</Text>
-                </Text>
+                <View className="flex-row items-center justify-between mb-2">
+                  <Text className="text-xl text-white font-bold">
+                    Results for{" "}
+                    <Text className="text-accent">"{searchQuery}"</Text>
+                  </Text>
+                  <View className="bg-accent rounded-full px-3 py-1">
+                    <Text className="text-white text-xs font-bold">
+                      {movies?.length}
+                    </Text>
+                  </View>
+                </View>
               )}
           </>
         }
         ListEmptyComponent={
           !loading && !error ? (
-            <View className="mt-10 px-5">
-              <Text className="text-center text-gray-500">
+            <View className="mt-16 px-5 items-center">
+              <Text className="text-5xl mb-4">🔍</Text>
+              <Text className="text-center text-white text-lg font-bold">
                 {searchQuery.trim()
                   ? "No movies found"
-                  : "Start typing to search for movies"}
+                  : "Discover Movies"}
+              </Text>
+              <Text className="text-center text-light-300 text-sm mt-2">
+                {searchQuery.trim()
+                  ? "Try a different search term"
+                  : "Start typing to search thousands of movies"}
               </Text>
             </View>
           ) : null

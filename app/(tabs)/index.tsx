@@ -47,16 +47,26 @@ const Index = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
       >
+        {/* Logo */}
         <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
 
         {moviesLoading || trendingLoading ? (
-          <ActivityIndicator
-            size="large"
-            color="#0000ff"
-            className="mt-10 self-center"
-          />
+          <View className="flex-1 justify-center items-center mt-20">
+            <ActivityIndicator size="large" color="#AB8BFF" />
+            <Text className="text-light-200 mt-4 text-sm">
+              Loading movies...
+            </Text>
+          </View>
         ) : moviesError || trendingError ? (
-          <Text>Error: {moviesError?.message || trendingError?.message}</Text>
+          <View className="flex-1 justify-center items-center mt-20 px-5">
+            <Text className="text-6xl mb-4">🎬</Text>
+            <Text className="text-white text-lg font-bold text-center">
+              Oops! Something went wrong
+            </Text>
+            <Text className="text-light-300 text-sm text-center mt-2">
+              {moviesError?.message || trendingError?.message}
+            </Text>
+          </View>
         ) : (
           <View className="flex-1 mt-5">
             <SearchBar
@@ -66,11 +76,14 @@ const Index = () => {
               placeholder="Search for a movie"
             />
 
+            {/* Trending Section */}
             {trendingMovies && (
               <View className="mt-10">
-                <Text className="text-lg text-white font-bold mb-3">
-                  Trending Movies
-                </Text>
+                <View className="flex-row items-center mb-3">
+                  <Text className="text-lg text-white font-bold">
+                    🔥 Trending Movies
+                  </Text>
+                </View>
                 <FlatList
                   horizontal
                   showsHorizontalScrollIndicator={false}
@@ -88,10 +101,16 @@ const Index = () => {
               </View>
             )}
 
+            {/* Latest Movies Section */}
             <>
-              <Text className="text-lg text-white font-bold mt-5 mb-3">
-                Latest Movies
-              </Text>
+              <View className="flex-row items-center justify-between mt-5 mb-3">
+                <Text className="text-lg text-white font-bold">
+                  🎬 Latest Movies
+                </Text>
+                <Text className="text-xs text-accent">
+                  {movies?.length || 0} results
+                </Text>
+              </View>
 
               <FlatList
                 data={movies}
@@ -100,9 +119,9 @@ const Index = () => {
                 numColumns={3}
                 columnWrapperStyle={{
                   justifyContent: "flex-start",
-                  gap: 20,
+                  gap: 16,
                   paddingRight: 5,
-                  marginBottom: 10,
+                  marginBottom: 14,
                 }}
                 className="mt-2 pb-32"
                 scrollEnabled={false}
