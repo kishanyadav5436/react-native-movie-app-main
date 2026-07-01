@@ -48,7 +48,10 @@ const Details = () => {
         <View>
           <Image
             source={{
-              uri: `https://image.tmdb.org/t/p/w500${movie?.poster_path}`,
+              uri:
+                movie?.Poster && movie?.Poster !== "N/A"
+                  ? movie.Poster
+                  : "https://placehold.co/600x900/1a1a1a/FFFFFF.png",
             }}
             className="w-full h-[550px]"
             resizeMode="stretch"
@@ -64,52 +67,42 @@ const Details = () => {
         </View>
 
         <View className="flex-col items-start justify-center mt-5 px-5">
-          <Text className="text-white font-bold text-xl">{movie?.title}</Text>
+          <Text className="text-white font-bold text-xl">{movie?.Title}</Text>
           <View className="flex-row items-center gap-x-1 mt-2">
             <Text className="text-light-200 text-sm">
-              {movie?.release_date?.split("-")[0]} •
+              {movie?.Year} •
             </Text>
-            <Text className="text-light-200 text-sm">{movie?.runtime}m</Text>
+            <Text className="text-light-200 text-sm">{movie?.Runtime}</Text>
           </View>
 
           <View className="flex-row items-center bg-dark-100 px-2 py-1 rounded-md gap-x-1 mt-2">
             <Image source={icons.star} className="size-4" />
 
             <Text className="text-white font-bold text-sm">
-              {Math.round(movie?.vote_average ?? 0)}/10
+              {movie?.imdbRating || "N/A"}/10
             </Text>
 
             <Text className="text-light-200 text-sm">
-              ({movie?.vote_count} votes)
+              ({movie?.imdbVotes || "0"} votes)
             </Text>
           </View>
 
-          <MovieInfo label="Overview" value={movie?.overview} />
-          <MovieInfo
-            label="Genres"
-            value={movie?.genres?.map((g) => g.name).join(" • ") || "N/A"}
-          />
+          <MovieInfo label="Overview" value={movie?.Plot} />
+          <MovieInfo label="Genres" value={movie?.Genre || "N/A"} />
+          <MovieInfo label="Director" value={movie?.Director} />
+          <MovieInfo label="Actors" value={movie?.Actors} />
 
           <View className="flex flex-row justify-between w-1/2">
+            <MovieInfo label="Rated" value={movie?.Rated} />
             <MovieInfo
-              label="Budget"
-              value={`$${(movie?.budget ?? 0) / 1_000_000} million`}
-            />
-            <MovieInfo
-              label="Revenue"
-              value={`$${Math.round(
-                (movie?.revenue ?? 0) / 1_000_000
-              )} million`}
+              label="Box Office"
+              value={movie?.BoxOffice || "N/A"}
             />
           </View>
 
-          <MovieInfo
-            label="Production Companies"
-            value={
-              movie?.production_companies?.map((c) => c.name).join(" • ") ||
-              "N/A"
-            }
-          />
+          <MovieInfo label="Awards" value={movie?.Awards} />
+          <MovieInfo label="Country" value={movie?.Country} />
+          <MovieInfo label="Language" value={movie?.Language} />
         </View>
       </ScrollView>
 

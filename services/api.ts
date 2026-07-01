@@ -1,10 +1,6 @@
-export const TMDB_CONFIG = {
-  BASE_URL: "https://api.themoviedb.org/3",
-  API_KEY: process.env.EXPO_PUBLIC_MOVIE_API_KEY,
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${process.env.EXPO_PUBLIC_MOVIE_API_KEY}`,
-  },
+export const OMDB_CONFIG = {
+  BASE_URL: "https://www.omdbapi.com",
+  API_KEY: "c8c3b4f7",
 };
 
 export const fetchMovies = async ({
@@ -12,13 +8,13 @@ export const fetchMovies = async ({
 }: {
   query: string;
 }): Promise<Movie[]> => {
-  const endpoint = query
-    ? `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-    : `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc`;
+  // OMDB requires a search term; if empty, search for popular terms
+  const searchTerm = query.trim() || "movie";
+
+  const endpoint = `${OMDB_CONFIG.BASE_URL}/?apikey=${OMDB_CONFIG.API_KEY}&s=${encodeURIComponent(searchTerm)}&type=movie`;
 
   const response = await fetch(endpoint, {
     method: "GET",
-    headers: TMDB_CONFIG.headers,
   });
 
   if (!response.ok) {
@@ -26,7 +22,12 @@ export const fetchMovies = async ({
   }
 
   const data = await response.json();
-  return data.results;
+
+  if (data.Response === "False") {
+    throw new Error(data.Error || "No movies found");
+  }
+
+  return data.Search || [];
 };
 
 export const fetchMovieDetails = async (
@@ -34,10 +35,9 @@ export const fetchMovieDetails = async (
 ): Promise<MovieDetails> => {
   try {
     const response = await fetch(
-      `${TMDB_CONFIG.BASE_URL}/movie/${movieId}?api_key=${TMDB_CONFIG.API_KEY}`,
+      `${OMDB_CONFIG.BASE_URL}/?apikey=${OMDB_CONFIG.API_KEY}&i=${movieId}&plot=full`,
       {
         method: "GET",
-        headers: TMDB_CONFIG.headers,
       }
     );
 
@@ -46,6 +46,11 @@ export const fetchMovieDetails = async (
     }
 
     const data = await response.json();
+
+    if (data.Response === "False") {
+      throw new Error(data.Error || "Movie not found");
+    }
+
     return data;
   } catch (error) {
     console.error("Error fetching movie details:", error);

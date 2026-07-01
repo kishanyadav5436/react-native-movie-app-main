@@ -12,7 +12,12 @@ const TrendingCard = ({
     <Link href={`/movie/${movie_id}`} asChild>
       <TouchableOpacity className="w-32 relative pl-5">
         <Image
-          source={{ uri: poster_url }}
+          source={{
+            uri:
+              poster_url && poster_url !== "N/A"
+                ? poster_url
+                : "https://placehold.co/300x450/1a1a1a/FFFFFF.png",
+          }}
           className="w-32 h-48 rounded-lg"
           resizeMode="cover"
         />
