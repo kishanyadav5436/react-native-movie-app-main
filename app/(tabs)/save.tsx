@@ -13,24 +13,65 @@ const Save = () => {
       />
 
       <View className="flex justify-center items-center flex-1 flex-col px-8">
-        {/* Bookmark Icon Circle */}
-        <View className="w-24 h-24 rounded-full bg-dark-200 border-2 border-accent items-center justify-center mb-6">
-          <Image source={icons.save} className="size-10" tintColor="#AB8BFF" />
+        {/* Bookmark Icon Circle with Glow */}
+        <View
+          className="w-28 h-28 rounded-full bg-dark-200 border-2 border-accent items-center justify-center mb-7"
+          style={{
+            shadowColor: "#AB8BFF",
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 0.4,
+            shadowRadius: 18,
+            elevation: 10,
+          }}
+        >
+          <Image source={icons.save} className="size-11" tintColor="#AB8BFF" />
         </View>
 
-        <Text className="text-white text-2xl font-bold">Saved Movies</Text>
-        <Text className="text-light-300 text-sm mt-2 text-center leading-5">
+        <Text
+          className="text-white text-2xl font-bold tracking-wide"
+          style={{ letterSpacing: 0.5 }}
+        >
+          Saved Movies
+        </Text>
+        <Text className="text-light-300 text-sm mt-2.5 text-center leading-5">
           Your bookmarked movies will appear here.{"\n"}Start saving movies you
           want to watch later!
         </Text>
 
-        {/* Empty State Illustration */}
-        <View className="mt-10 bg-dark-200 rounded-2xl px-8 py-8 border border-dark-100 items-center">
+        {/* Decorative dots */}
+        <View className="flex-row items-center gap-x-1.5 mt-6 mb-4">
+          <View className="w-1 h-1 rounded-full bg-accent/40" />
+          <View className="w-1.5 h-1.5 rounded-full bg-accent/60" />
+          <View className="w-2 h-2 rounded-full bg-accent" />
+          <View className="w-1.5 h-1.5 rounded-full bg-accent/60" />
+          <View className="w-1 h-1 rounded-full bg-accent/40" />
+        </View>
+
+        {/* Empty State Card */}
+        <View
+          className="mt-4 bg-dark-200 rounded-3xl px-8 py-9 border border-dark-100 items-center w-full"
+          style={{
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.35,
+            shadowRadius: 10,
+            elevation: 6,
+          }}
+        >
           <Text className="text-5xl mb-4">🍿</Text>
-          <Text className="text-white font-bold text-base">No saved movies yet</Text>
-          <Text className="text-light-300 text-xs mt-2 text-center">
+          <Text className="text-white font-bold text-base tracking-wide">
+            No saved movies yet
+          </Text>
+          <Text className="text-light-300 text-xs mt-2.5 text-center leading-4">
             Browse movies and tap the bookmark icon to save them for later
           </Text>
+
+          {/* Suggestion pill */}
+          <View className="mt-5 bg-accent/15 px-5 py-2 rounded-full border border-accent/25">
+            <Text className="text-accent text-xs font-semibold">
+              Explore trending movies →
+            </Text>
+          </View>
         </View>
       </View>
     </SafeAreaView>

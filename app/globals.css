@@ -1,3 +1,83 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  * {
+    font-family: "Inter", system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .card-glass {
+    @apply bg-dark-200 rounded-2xl border border-dark-100 overflow-hidden;
+  }
+
+  .section-title {
+    @apply text-xl text-white font-bold tracking-wide;
+  }
+
+  .pill-badge {
+    @apply px-3.5 py-1.5 rounded-full bg-dark-100 border border-dark-100;
+  }
+
+  .pill-badge-accent {
+    @apply px-3.5 py-1.5 rounded-full bg-accent/20 border border-accent/30;
+  }
+
+  .info-card {
+    @apply bg-dark-200 rounded-2xl px-5 py-4 border border-dark-100 flex-row items-center;
+  }
+
+  .avatar-circle {
+    @apply w-28 h-28 rounded-full bg-dark-200 border-2 border-accent items-center justify-center;
+  }
+
+  .screen-container {
+    @apply flex-1 bg-primary;
+  }
+
+  .divider {
+    @apply w-full h-px bg-dark-100/60;
+  }
+}
+
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow-color: rgba(171, 139, 255, 0.5);
+    text-shadow-offset: 0px 0px;
+    text-shadow-radius: 10px;
+  }
+
+  .elevation-sm {
+    shadow-color: #000000;
+    shadow-offset: 0px 2px;
+    shadow-opacity: 0.25;
+    shadow-radius: 4px;
+    elevation: 3;
+  }
+
+  .elevation-md {
+    shadow-color: #000000;
+    shadow-offset: 0px 4px;
+    shadow-opacity: 0.35;
+    shadow-radius: 8px;
+    elevation: 6;
+  }
+
+  .elevation-lg {
+    shadow-color: #000000;
+    shadow-offset: 0px 8px;
+    shadow-opacity: 0.45;
+    shadow-radius: 16px;
+    elevation: 10;
+  }
+
+  .glow-accent {
+    shadow-color: #AB8BFF;
+    shadow-offset: 0px 0px;
+    shadow-opacity: 0.4;
+    shadow-radius: 12px;
+    elevation: 8;
+  }
+}

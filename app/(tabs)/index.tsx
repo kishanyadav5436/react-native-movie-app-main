@@ -52,20 +52,50 @@ const Index = () => {
 
         {moviesLoading || trendingLoading ? (
           <View className="flex-1 justify-center items-center mt-20">
-            <ActivityIndicator size="large" color="#AB8BFF" />
-            <Text className="text-light-200 mt-4 text-sm">
+            <View
+              className="w-20 h-20 rounded-full bg-dark-200 border border-dark-100 items-center justify-center mb-5"
+              style={{
+                shadowColor: "#AB8BFF",
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 0.3,
+                shadowRadius: 12,
+                elevation: 6,
+              }}
+            >
+              <ActivityIndicator size="large" color="#AB8BFF" />
+            </View>
+            <Text className="text-light-100 text-base font-semibold">
               Loading movies...
+            </Text>
+            <Text className="text-light-300 mt-1.5 text-xs">
+              Fetching the latest for you
             </Text>
           </View>
         ) : moviesError || trendingError ? (
           <View className="flex-1 justify-center items-center mt-20 px-5">
-            <Text className="text-6xl mb-4">🎬</Text>
-            <Text className="text-white text-lg font-bold text-center">
-              Oops! Something went wrong
-            </Text>
-            <Text className="text-light-300 text-sm text-center mt-2">
-              {moviesError?.message || trendingError?.message}
-            </Text>
+            <View
+              className="bg-dark-200 rounded-3xl px-8 py-10 border border-dark-100 items-center w-full"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 6 },
+                shadowOpacity: 0.4,
+                shadowRadius: 12,
+                elevation: 8,
+              }}
+            >
+              <Text className="text-6xl mb-5">🎬</Text>
+              <Text className="text-white text-xl font-bold text-center">
+                Oops! Something went wrong
+              </Text>
+              <Text className="text-light-300 text-sm text-center mt-3 leading-5">
+                {moviesError?.message || trendingError?.message}
+              </Text>
+              <View className="mt-5 bg-accent/15 px-5 py-2 rounded-full border border-accent/25">
+                <Text className="text-accent text-xs font-semibold">
+                  Pull down to retry
+                </Text>
+              </View>
+            </View>
           </View>
         ) : (
           <View className="flex-1 mt-5">
@@ -80,9 +110,10 @@ const Index = () => {
             {trendingMovies && (
               <View className="mt-10">
                 <View className="flex-row items-center mb-3">
-                  <Text className="text-lg text-white font-bold">
+                  <Text className="text-xl text-white font-bold tracking-wide">
                     🔥 Trending Movies
                   </Text>
+                  <View className="flex-1 h-px bg-dark-100/40 ml-4" />
                 </View>
                 <FlatList
                   horizontal
@@ -104,12 +135,17 @@ const Index = () => {
             {/* Latest Movies Section */}
             <>
               <View className="flex-row items-center justify-between mt-5 mb-3">
-                <Text className="text-lg text-white font-bold">
-                  🎬 Latest Movies
-                </Text>
-                <Text className="text-xs text-accent">
-                  {movies?.length || 0} results
-                </Text>
+                <View className="flex-row items-center flex-1">
+                  <Text className="text-xl text-white font-bold tracking-wide">
+                    🎬 Latest Movies
+                  </Text>
+                  <View className="flex-1 h-px bg-dark-100/40 ml-4" />
+                </View>
+                <View className="bg-accent/15 rounded-full px-3 py-1 ml-3 border border-accent/25">
+                  <Text className="text-accent text-xs font-bold">
+                    {movies?.length || 0}
+                  </Text>
+                </View>
               </View>
 
               <FlatList

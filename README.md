@@ -1,261 +1,478 @@
-<div align="center">
-  <br />
-    <a href="https://www.youtube.com/watch?v=f8Z9JyB2EIE" target="_blank">
-      <img src="assets/readme/hero.webp" alt="Project Banner">
-    </a>
-  <br />
+<p align="center">
+  <img src="assets/images/logo.png" alt="Movie App Logo" width="80" />
+</p>
 
-  <div>
-    <img src="https://img.shields.io/badge/-React_Native-black?style=for-the-badge&logoColor=white&logo=react&color=61DAFB" alt="React Native" />
-    <img src="https://img.shields.io/badge/-Expo-black?style=for-the-badge&logoColor=white&logo=expo&color=000020" alt="Expo" />
-    <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="TypeScript" />
-    <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="Tailwind CSS" />
-    <img src="https://img.shields.io/badge/-Appwrite-black?style=for-the-badge&logoColor=white&logo=appwrite&color=F02E65" alt="Appwrite" />
-  </div>
+<h1 align="center">🎬 React Native Movie App</h1>
 
-  <h3 align="center">A Movie Finding App with Extensive Search</h3>
+<p align="center">
+  <strong>Discover, search, and explore movies — beautifully crafted for every platform.</strong>
+</p>
 
-   <div align="center">
-     Build this project step by step with our detailed tutorial on <a href="https://www.youtube.com/@javascriptmastery/videos" target="_blank"><b>JavaScript Mastery</b></a> YouTube. Join the JSM family!
-    </div>
-</div>
+<p align="center">
+  A cross-platform mobile application built with React Native, Expo SDK 52, and TypeScript. Browse trending films, search the OMDb database, and dive into rich movie details — all wrapped in a stunning purple-accented dark UI.
+</p>
 
-## 📋 <a name="table">Table of Contents</a>
+<p align="center">
+  <img src="https://img.shields.io/badge/React_Native-0.76.9-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React Native" />
+  <img src="https://img.shields.io/badge/Expo_SDK-52-000020?style=for-the-badge&logo=expo&logoColor=white" alt="Expo" />
+  <img src="https://img.shields.io/badge/TypeScript-5.3+-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/NativeWind-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="NativeWind" />
+  <img src="https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20%7C%20Web-purple?style=for-the-badge" alt="Platform" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
+</p>
 
-1. 🤖 [Introduction](#introduction)
+---
 
-2. ⚙️ [Tech Stack](#tech-stack)
+## ✨ Features
 
-3. 🔋 [Features](#features)
+| | Feature | Description |
+|---|---|---|
+| 🔥 | **Trending Movies** | Horizontal scrollable cards showcasing top-rated films with gradient rank overlays |
+| 🔍 | **Smart Search** | Debounced search powered by the OMDb API with real-time results |
+| 🎞️ | **Rich Details** | Full movie metadata — ratings, box office, awards, cast, plot & more |
+| 🎨 | **Stunning Dark UI** | Deep blue-black theme with purple accents and glassmorphism effects |
+| 📱 | **Cross-Platform** | Runs natively on iOS, Android, and Web from a single codebase |
+| ⚡ | **File-Based Routing** | Expo Router v4 with intuitive nested navigation |
+| 🧩 | **Modular Architecture** | Clean separation of components, services, types, and constants |
+| 💜 | **Custom Design System** | Curated color palette, masked views, gradients, and blur effects |
 
-4. 🤸 [Quick Start](#quick-start)
+---
 
-5. 🕸️ [Snippets (Code to Copy)](#snippets)
+## 📸 Screenshots
 
-6. 🔗 [Assets](#links)
+<p align="center">
+  <img src="assets/readme/home.png" alt="Home Screen" width="220" />
+  &nbsp;&nbsp;
+  <img src="assets/readme/search.png" alt="Search Screen" width="220" />
+  &nbsp;&nbsp;
+  <img src="assets/readme/details.png" alt="Movie Details" width="220" />
+</p>
 
-7. 🚀 [More](#more)
+<p align="center">
+  <em>Home • Search • Movie Details</em>
+</p>
 
-## 🚨 Tutorial
+---
 
-This repository contains the code corresponding to an in-depth tutorial available on our YouTube channel, <a href="https://www.youtube.com/@javascriptmastery/videos" target="_blank"><b>JavaScript Mastery</b></a>.
+## 🏗️ Architecture
 
-If you prefer visual learning, this is the perfect resource for you. Follow our tutorial to learn how to build projects like these step-by-step in a beginner-friendly manner!
+### High-Level Data Flow
 
-<a href="https://www.youtube.com/watch?v=f8Z9JyB2EIE" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/1736fca5-a031-4854-8c09-bc110e3bc16d" /></a>
+```mermaid
+graph TD
+    subgraph UI["🖥️ UI Layer"]
+        A["(tabs)/index.tsx<br/>Home Screen"] 
+        B["(tabs)/search.tsx<br/>Search Screen"]
+        C["movie/[id].tsx<br/>Detail Screen"]
+        D["Components<br/>MovieCard · TrendingCard · SearchBar"]
+    end
 
-## <a name="introduction">🤖 Introduction</a>
+    subgraph Hooks["🪝 Hooks"]
+        E["useFetch&lt;T&gt;<br/>Generic data fetcher"]
+    end
 
-Built with Expo, TypeScript, and Tailwind CSS, this app fetches movies and creates a popularity algorithm using Appwrite. It provides users with a seamless browsing experience, ranking movies based on various engagement metrics. The app leverages modern UI/UX principles for a responsive and visually appealing interface, ensuring real-world scalability and performance.
+    subgraph Services["⚙️ Service Layer"]
+        F["api.ts<br/>fetchMovies() · fetchMovieDetails()"]
+        G["appwrite.ts<br/>getTrendingMovies()"]
+    end
 
-If you're getting started and need assistance or face any bugs, join our active Discord community with over **50k+** members. It's a place where people help each other out.
+    subgraph External["🌐 External"]
+        H["OMDb REST API<br/>omdbapi.com"]
+    end
 
-<a href="https://discord.com/invite/n6EdbFJ" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/618f4872-1e10-42da-8213-1d69e486d02e" /></a>
+    A --> E
+    B --> E
+    C --> E
+    A --> D
+    B --> D
+    E --> F
+    E --> G
+    F --> H
+    G --> F
+    G --> H
 
-## <a name="tech-stack">⚙️ Tech Stack</a>
-
-- **[Expo](https://expo.dev/)** is an open-source platform for building universal native apps (Android, iOS, web) using JavaScript/TypeScript and React Native. It features file-based routing via Expo Router, fast refresh, native modules for camera/maps/notifications, over-the-air updates (EAS), and streamlined app deployment.
-
-- **[React Native](https://reactnative.dev/)** is a framework for building mobile UIs with React. It enables component‑based, cross-platform development with declarative UI, deep native API support, and is tightly integrated with Expo for navigation and native capabilities.
-
-- **[Appwrite](https://jsm.dev/rn25-appwrite)** is an open-source backend-as-a-service platform offering secure authentication (email/password, OAuth, SMS, magic links), databases, file storage with compression/encryption, real-time messaging, serverless functions, and static site hosting via Appwrite Sites—all managed through a unified console and microservices architecture.
-
-- **[TypeScript](https://www.typescriptlang.org/)** is a statically-typed superset of JavaScript providing type annotations, interfaces, enums, generics, and enhanced tooling. It improves error detection, code quality, and scalability—ideal for robust, maintainable projects.
-
-- **[Tailwind CSS](https://tailwindcss.com/)** is a utility-first CSS framework enabling rapid UI design via low-level classes. In React Native/Expo, it’s commonly used with NativeWind to apply Tailwind-style utilities to mobile components.
-
-- **[NativeWind](https://www.nativewind.dev/)** brings Tailwind CSS to React Native and Expo, allowing you to style mobile components using utility-first classes for fast, consistent, and responsive UI design.
-
-## <a name="features">🔋 Features</a>
-
-### Features of the Mobile Movie AppProject
-
-👉 **Real-time data**: Fetching and displaying real-time movie data
-
-👉 **Home Page**: Featured and discover movies
-
-👉 **Search Page**: Search for your favorite movies
-
-👉 **Popularity algorithm**: Track user searches to display the most popular movies
-
-and many more, including code architecture and reusability.
-
-## <a name="quick-start">🤸 Quick Start</a>
-
-Follow these steps to set up the project locally on your machine.
-
-**Prerequisites**
-
-Make sure you have the following installed on your machine:
-
-- [Git](https://git-scm.com/)
-
-- [Node.js](https://nodejs.org/en)
-
-- [npm](https://www.npmjs.com/) (Node Package Manager)
-
-**Cloning the Repository**
-
-```bash
-git clone https://github.com/adrianhajdin/rn-movie-app.git
-
-cd rn-movie-app
+    style UI fill:#1A1730,stroke:#AB8BFF,color:#D6C7FF
+    style Hooks fill:#221F3D,stroke:#AB8BFF,color:#D6C7FF
+    style Services fill:#0F0D23,stroke:#AB8BFF,color:#D6C7FF
+    style External fill:#030014,stroke:#7B5FD4,color:#A8B5DB
 ```
 
-**Installation**
+### Navigation Architecture
 
-Install the project dependencies using npm:
+```mermaid
+graph LR
+    subgraph Root["Stack Navigator"]
+        direction TB
+        Tabs["(tabs) — Bottom Tab Navigator"]
+        Detail["movie/[id] — Detail Screen"]
+    end
+
+    subgraph TabScreens["Bottom Tabs"]
+        Home["🏠 Home"]
+        Search["🔍 Search"]
+        Save["💾 Save"]
+        Profile["👤 Profile"]
+    end
+
+    Root --> Tabs
+    Root --> Detail
+    Tabs --> Home
+    Tabs --> Search
+    Tabs --> Save
+    Tabs --> Profile
+    Home -->|"Navigate"| Detail
+    Search -->|"Navigate"| Detail
+
+    style Root fill:#0F0D23,stroke:#AB8BFF,color:#D6C7FF
+    style TabScreens fill:#1A1730,stroke:#7B5FD4,color:#C4ABFF
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology | Version |
+|---|---|---|
+| **Framework** | React Native | `0.76.9` |
+| **SDK** | Expo | `~52.0.49` |
+| **Language** | TypeScript | `5.3+` |
+| **Routing** | Expo Router | `~4.0.22` |
+| **Styling** | NativeWind (TailwindCSS v3) | `^4.1.23` |
+| **Animations** | React Native Reanimated | `~3.16.1` |
+| **Gradients** | Expo Linear Gradient | `~14.0.2` |
+| **Blur Effects** | Expo Blur | `~14.0.3` |
+| **Masked Views** | @react-native-masked-view | `0.3.2` |
+| **Icons** | React Native Heroicons | `^4.0.0` |
+| **API** | OMDb API | — |
+| **Package Manager** | npm | — |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+| Requirement | Minimum Version |
+|---|---|
+| **Node.js** | `18.x` or later |
+| **npm** | `9.x` or later |
+| **Expo CLI** | Latest (`npx expo`) |
+| **iOS** | Xcode 15+ (macOS only) |
+| **Android** | Android Studio with SDK 34+ |
+
+### Installation
 
 ```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/MovieApp.git
+cd MovieApp
+
+# 2. Install dependencies
 npm install
+
+# 3. Set up environment (API key is pre-configured)
+#    The OMDb API key is embedded in services/api.ts
 ```
 
-**Set Up Environment Variables**
-
-Create a new file named `.env` in the root of your project and add the following content:
-
-```env
-
-EXPO_PUBLIC_MOVIE_API_KEY=
-
-EXPO_PUBLIC_APPWRITE_PROJECT_ID=
-
-EXPO_PUBLIC_APPWRITE_DATABASE_ID=
-
-EXPO_PUBLIC_APPWRITE_COLLECTION_ID=
-```
-
-Replace the placeholder values with your actual TMDB API key, Appwrite project ID, Database ID, and Collection ID. You can obtain these credentials by signing up on the [Appwrite](https://jsm.dev/rn25-appwrite), [TMDB](https://www.themoviedb.org/login).
-
-**Running the Project**
+### Running the App
 
 ```bash
+# Start the Expo development server
+npm start
 
-npx expo start
+# Run on specific platforms
+npm run android     # 📱 Android emulator/device
+npm run ios         # 🍎 iOS simulator (macOS only)
+npm run web         # 🌐 Web browser
 
+# Quality checks
+npm test            # 🧪 Run Jest test suite
+npm run lint        # 🔍 Run ESLint
 ```
 
-Open your ExpoGO app on your phone and scan the QR code to view the project.
+> **💡 Tip:** Press `a` for Android, `i` for iOS, or `w` for Web after starting the dev server.
 
-## <a name="snippets">🕸️ Snippets</a>
+---
 
-<details>
+## 📁 Project Structure
 
-<summary><code>tailwind.config.js</code></summary>
-
-```typescript
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
-  presets: [require("nativewind/preset")],
-  theme: {
-    extend: {
-      colors: {
-        primary: "#030014",
-        secondary: "#151312",
-        ratingBox: "#221F3D",
-        searchBar: "#0F0D23",
-        text: "#9CA4AB",
-        darkAccent: "#AB8BFF",
-        accentText: "#A8B5DB",
-        secondaryText: "#D6C7FF",
-      },
-    },
-  },
-  plugins: [],
-};
+```
+MovieApp/
+│
+├── 📂 app/                           # Expo Router — file-based routing
+│   ├── _layout.tsx                   # Root Stack navigator & StatusBar config
+│   ├── globals.css                   # TailwindCSS @base/@components/@utilities
+│   │
+│   ├── 📂 (tabs)/                    # Bottom Tab Navigator group
+│   │   ├── _layout.tsx               # Tab bar config (Home, Search, Save, Profile)
+│   │   ├── index.tsx                 # 🏠 Home — trending carousel + movie grid
+│   │   ├── search.tsx                # 🔍 Search — debounced OMDb search
+│   │   ├── save.tsx                  # 💾 Saved — bookmarked movies (placeholder)
+│   │   └── profile.tsx               # 👤 Profile — user info cards (placeholder)
+│   │
+│   └── 📂 movie/
+│       └── [id].tsx                  # 🎬 Movie Details — dynamic route by IMDb ID
+│
+├── 📂 components/                    # Reusable UI components
+│   ├── MovieCard.tsx                 # Grid card for 3-column movie listings
+│   ├── SearchBar.tsx                 # Search input with icon & navigation support
+│   └── TrendingCard.tsx              # Horizontal trending card with rank gradient
+│
+├── 📂 constants/                     # Static asset references
+│   ├── icons.ts                      # Icon image imports (8 icons)
+│   └── images.ts                     # Background & UI image imports
+│
+├── 📂 interfaces/                    # TypeScript type declarations
+│   └── interfaces.d.ts              # Movie, MovieDetails, TrendingMovie interfaces
+│
+├── 📂 services/                      # API & data layer
+│   ├── api.ts                        # OMDb API calls (search + detail)
+│   ├── appwrite.ts                   # Trending movies logic (top 5 hardcoded)
+│   └── usefetch.ts                   # Custom useFetch<T> hook
+│
+├── 📂 types/                         # Additional type declarations
+│   └── images.d.ts                   # Image module declarations for TS
+│
+├── 📂 assets/                        # Static assets
+│   ├── 📂 fonts/                     # Custom typefaces
+│   ├── 📂 icons/                     # PNG icons (home, search, person, logo, etc.)
+│   ├── 📂 images/                    # App images (bg, highlight, logo, gradient)
+│   └── 📂 readme/                    # README screenshot assets
+│
+├── app.json                          # Expo app configuration
+├── babel.config.js                   # Babel — NativeWind JSX + Reanimated
+├── metro.config.js                   # Metro bundler — NativeWind CSS input
+├── tailwind.config.js                # TailwindCSS theme & custom colors
+├── tsconfig.json                     # TypeScript config with @ path alias
+├── package.json                      # Dependencies & scripts
+└── vercel.json                       # Vercel web deployment config
 ```
 
-</details>
+---
 
-<details>
+## 🎨 Design System
 
-<summary><code>app/globals.css</code></summary>
+### Color Palette
 
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+| Swatch | Name | Hex | Usage |
+|---|---|---|---|
+| ![#030014](https://via.placeholder.com/16/030014/030014.png) | `primary` | `#030014` | Deep blue-black background |
+| ![#151312](https://via.placeholder.com/16/151312/151312.png) | `secondary` | `#151312` | Dark card text |
+| ![#AB8BFF](https://via.placeholder.com/16/AB8BFF/AB8BFF.png) | `accent` | `#AB8BFF` | Purple accent — buttons, highlights |
+| ![#C4ABFF](https://via.placeholder.com/16/C4ABFF/C4ABFF.png) | `accent-light` | `#C4ABFF` | Light purple |
+| ![#7B5FD4](https://via.placeholder.com/16/7B5FD4/7B5FD4.png) | `accent-dark` | `#7B5FD4` | Dark purple |
+| ![#FFD700](https://via.placeholder.com/16/FFD700/FFD700.png) | `gold` | `#FFD700` | Star ratings |
+| ![#D6C7FF](https://via.placeholder.com/16/D6C7FF/D6C7FF.png) | `light-100` | `#D6C7FF` | Light purple text |
+| ![#A8B5DB](https://via.placeholder.com/16/A8B5DB/A8B5DB.png) | `light-200` | `#A8B5DB` | Muted text |
+| ![#9CA4AB](https://via.placeholder.com/16/9CA4AB/9CA4AB.png) | `light-300` | `#9CA4AB` | Subtle text |
+| ![#221F3D](https://via.placeholder.com/16/221F3D/221F3D.png) | `dark-100` | `#221F3D` | Card borders |
+| ![#0F0D23](https://via.placeholder.com/16/0F0D23/0F0D23.png) | `dark-200` | `#0F0D23` | Card backgrounds |
+| ![#1A1730](https://via.placeholder.com/16/1A1730/1A1730.png) | `dark-300` | `#1A1730` | Elevated surfaces |
+
+### Rating Colors
+
+| Swatch | Rating | Hex |
+|---|---|---|
+| ![#4CAF50](https://via.placeholder.com/16/4CAF50/4CAF50.png) | Good (7+) | `#4CAF50` |
+| ![#FFC107](https://via.placeholder.com/16/FFC107/FFC107.png) | Average (5–7) | `#FFC107` |
+| ![#F44336](https://via.placeholder.com/16/F44336/F44336.png) | Poor (<5) | `#F44336` |
+
+### Design Principles
+
+- **Dark-first** — Deep blue-black backgrounds reduce eye strain and make content pop
+- **Purple accent system** — Three-tier purple palette (light, main, dark) for visual hierarchy
+- **Glassmorphism** — Blur effects and translucent surfaces for depth
+- **Gradient overlays** — Masked gradient rank numbers on trending cards
+- **3-column grid** — Consistent movie poster grid with balanced spacing
+
+---
+
+## 🔌 API Documentation
+
+### OMDb API Integration
+
+| Endpoint | Function | Parameters | Returns |
+|---|---|---|---|
+| Search | `fetchMovies({query})` | `query: string` — search term or empty for default | `Movie[]` |
+| Details | `fetchMovieDetails(id)` | `id: string` — IMDb ID (e.g., `tt0111161`) | `MovieDetails` |
+
+**Base URL:** `https://www.omdbapi.com/`
+
+**API Key:** `c8c3b4f7` (pre-configured in `services/api.ts`)
+
+### Example Response — Search
+
+```json
+{
+  "Search": [
+    {
+      "Title": "The Shawshank Redemption",
+      "Year": "1994",
+      "imdbID": "tt0111161",
+      "Type": "movie",
+      "Poster": "https://..."
+    }
+  ],
+  "totalResults": "1",
+  "Response": "True"
+}
 ```
 
-</details>
+### Example Response — Details
 
-<details>
+```json
+{
+  "Title": "The Shawshank Redemption",
+  "Year": "1994",
+  "Rated": "R",
+  "Runtime": "142 min",
+  "Genre": "Drama",
+  "Director": "Frank Darabont",
+  "Actors": "Tim Robbins, Morgan Freeman, Bob Gunton",
+  "Plot": "Over the course of several years, two convicts...",
+  "Ratings": [
+    { "Source": "Internet Movie Database", "Value": "9.3/10" },
+    { "Source": "Rotten Tomatoes", "Value": "91%" },
+    { "Source": "Metacritic", "Value": "82/100" }
+  ],
+  "BoxOffice": "$28,767,189",
+  "Awards": "Nominated for 7 Oscars. 21 wins & 43 nominations total"
+}
+```
 
-<summary><code>interfaces/interfaces.d.ts</code></summary>
+### Trending Movies
+
+The trending system uses a hardcoded list of top-rated IMDb IDs:
+
+| Rank | Movie | IMDb ID |
+|---|---|---|
+| 1 | The Shawshank Redemption | `tt0111161` |
+| 2 | The Godfather | `tt0068646` |
+| 3 | The Dark Knight | `tt0468569` |
+| 4 | Schindler's List | `tt0108052` |
+| 5 | The Lord of the Rings: The Return of the King | `tt0167260` |
+
+---
+
+## 🧩 Component API Reference
+
+### `<MovieCard />`
+
+Renders a movie poster card in the grid layout.
+
+| Prop | Type | Required | Description |
+|---|---|---|---|
+| `imdbID` | `string` | ✅ | IMDb identifier for navigation |
+| `Title` | `string` | ✅ | Movie title |
+| `Year` | `string` | ✅ | Release year |
+| `Type` | `string` | ✅ | Content type (movie, series, episode) |
+| `Poster` | `string` | ✅ | Poster image URL |
+
+```tsx
+<MovieCard
+  imdbID="tt0111161"
+  Title="The Shawshank Redemption"
+  Year="1994"
+  Type="movie"
+  Poster="https://..."
+/>
+```
+
+---
+
+### `<SearchBar />`
+
+Reusable search input with icon and dual-mode behavior.
+
+| Prop | Type | Required | Description |
+|---|---|---|---|
+| `placeholder` | `string` | ❌ | Input placeholder text |
+| `onPress` | `() => void` | ❌ | Tap handler (home screen — navigates to search) |
+| `onChangeText` | `(text: string) => void` | ❌ | Text change handler (search screen — filters results) |
+| `value` | `string` | ❌ | Current input value |
+
+```tsx
+// On Home screen — navigates to search
+<SearchBar placeholder="Search movies..." onPress={() => router.push('/search')} />
+
+// On Search screen — live filtering
+<SearchBar placeholder="Search..." value={query} onChangeText={setQuery} />
+```
+
+---
+
+### `<TrendingCard />`
+
+Horizontal scrollable card with a gradient-masked rank number overlay.
+
+| Prop | Type | Required | Description |
+|---|---|---|---|
+| `movie` | `TrendingMovie` | ✅ | Trending movie data object |
+| `index` | `number` | ✅ | Position index (used for rank display) |
+
+```tsx
+<TrendingCard
+  movie={{ movie_id: "tt0111161", title: "...", poster_url: "...", count: 100, searchTerm: "..." }}
+  index={0}
+/>
+```
+
+---
+
+### `useFetch<T>` Hook
+
+Generic data fetching hook with loading, error, and refetch capabilities.
+
+```tsx
+const { data, loading, error, refetch, reset } = useFetch<Movie[]>(
+  () => fetchMovies({ query: "Batman" }),
+  true // autoFetch on mount
+);
+```
+
+| Return | Type | Description |
+|---|---|---|
+| `data` | `T \| null` | Fetched data |
+| `loading` | `boolean` | Loading state |
+| `error` | `Error \| null` | Error object if request failed |
+| `refetch` | `() => void` | Manually re-trigger the fetch |
+| `reset` | `() => void` | Reset data, loading, and error states |
+
+---
+
+## 🧪 TypeScript Interfaces
 
 ```typescript
 interface Movie {
-  id: number;
-  title: string;
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
-
-interface TrendingMovie {
-  searchTerm: string;
-  movie_id: number;
-  title: string;
-  count: number;
-  poster_url: string;
+  imdbID: string;
+  Title: string;
+  Year: string;
+  Type: string;
+  Poster: string;
 }
 
 interface MovieDetails {
-  adult: boolean;
-  backdrop_path: string | null;
-  belongs_to_collection: {
-    id: number;
-    name: string;
-    poster_path: string;
-    backdrop_path: string;
-  } | null;
-  budget: number;
-  genres: {
-    id: number;
-    name: string;
-  }[];
-  homepage: string | null;
-  id: number;
-  imdb_id: string | null;
-  original_language: string;
-  original_title: string;
-  overview: string | null;
-  popularity: number;
-  poster_path: string | null;
-  production_companies: {
-    id: number;
-    logo_path: string | null;
-    name: string;
-    origin_country: string;
-  }[];
-  production_countries: {
-    iso_3166_1: string;
-    name: string;
-  }[];
-  release_date: string;
-  revenue: number;
-  runtime: number | null;
-  spoken_languages: {
-    english_name: string;
-    iso_639_1: string;
-    name: string;
-  }[];
-  status: string;
-  tagline: string | null;
+  Title: string;
+  Year: string;
+  Rated: string;
+  Runtime: string;
+  Genre: string;
+  Director: string;
+  Actors: string;
+  Plot: string;
+  Poster: string;
+  Ratings: { Source: string; Value: string }[];
+  BoxOffice: string;
+  Awards: string;
+  // ... additional OMDb fields
+}
+
+interface TrendingMovie {
+  movie_id: string;
   title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
+  poster_url: string;
+  count: number;
+  searchTerm: string;
 }
 
 interface TrendingCardProps {
@@ -264,24 +481,83 @@ interface TrendingCardProps {
 }
 ```
 
-</details>
+---
 
-## <a name="links">🔗 Assets</a>
+## 🤝 Contributing
 
-Assets and snippets used in the project can be found in the **[video kit](https://jsm.dev/rn25-movie)**.
+Contributions are welcome! Here's how you can help:
 
-<a href="https://jsm.dev/rn25-movie" target="_blank">
-  <img src="assets/readme/videokit.webp" alt="Video Kit Banner">
-</a>
+1. **Fork** the repository
+2. **Create** a feature branch
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. **Commit** your changes
+   ```bash
+   git commit -m "feat: add amazing feature"
+   ```
+4. **Push** to the branch
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. **Open** a Pull Request
 
-## <a name="more">🚀 More</a>
+### Commit Convention
 
-**Advance your skills with Next.js Pro Course**
+| Prefix | Purpose |
+|---|---|
+| `feat:` | New feature |
+| `fix:` | Bug fix |
+| `docs:` | Documentation only |
+| `style:` | Formatting, no logic change |
+| `refactor:` | Code restructuring |
+| `test:` | Adding or updating tests |
+| `chore:` | Build process, dependencies |
 
-Enjoyed creating this project? Dive deeper into our PRO courses for a richer learning adventure. They're packed with
+### Development Guidelines
 
-detailed explanations, cool features, and exercises to boost your skills. Give it a go!
+- Write all new code in **TypeScript**
+- Use **NativeWind** classes for styling (avoid inline `style` objects)
+- Follow the existing **file-based routing** conventions
+- Add types to `interfaces/interfaces.d.ts` for new data shapes
+- Test on both **iOS and Android** before submitting PRs
 
-<a href="https://jsm.dev/rn25-jsm" target="_blank">
-   <img src="assets/readme/jsmpro.webp" alt="Project Banner">
-</a>
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+```
+MIT License
+
+Copyright (c) 2025 React Native Movie App
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+<p align="center">
+  Built with 💜 using React Native & Expo
+</p>
+
+<p align="center">
+  <a href="#-react-native-movie-app">Back to Top ↑</a>
+</p>

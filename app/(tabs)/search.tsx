@@ -79,19 +79,31 @@ const Search = () => {
             </View>
 
             {loading && (
-              <View className="flex-row items-center justify-center my-4">
+              <View className="flex-row items-center justify-center my-5 bg-dark-200/60 rounded-full px-5 py-3 border border-dark-100/50 self-center">
                 <ActivityIndicator size="small" color="#AB8BFF" />
-                <Text className="text-light-200 ml-3 text-sm">
+                <Text className="text-light-100 ml-3 text-sm font-medium">
                   Searching...
                 </Text>
               </View>
             )}
 
             {error && (
-              <View className="bg-dark-200 rounded-xl px-4 py-3 my-3 border border-dark-100">
-                <Text className="text-red-400 text-sm">
-                  ⚠️ {error.message}
-                </Text>
+              <View
+                className="bg-dark-200 rounded-2xl px-5 py-4 my-3 border border-rating-red/30"
+                style={{
+                  shadowColor: "#F44336",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.15,
+                  shadowRadius: 6,
+                  elevation: 4,
+                }}
+              >
+                <View className="flex-row items-center">
+                  <Text className="text-lg mr-2">⚠️</Text>
+                  <Text className="text-rating-red text-sm font-semibold flex-1">
+                    {error.message}
+                  </Text>
+                </View>
               </View>
             )}
 
@@ -99,12 +111,23 @@ const Search = () => {
               !error &&
               searchQuery.trim() &&
               movies?.length! > 0 && (
-                <View className="flex-row items-center justify-between mb-2">
-                  <Text className="text-xl text-white font-bold">
-                    Results for{" "}
-                    <Text className="text-accent">"{searchQuery}"</Text>
-                  </Text>
-                  <View className="bg-accent rounded-full px-3 py-1">
+                <View className="flex-row items-center justify-between mb-3 mt-1">
+                  <View className="flex-row items-center flex-1">
+                    <Text className="text-xl text-white font-bold">
+                      Results for{" "}
+                      <Text className="text-accent">"{searchQuery}"</Text>
+                    </Text>
+                  </View>
+                  <View
+                    className="bg-accent rounded-full px-3.5 py-1.5 ml-3"
+                    style={{
+                      shadowColor: "#AB8BFF",
+                      shadowOffset: { width: 0, height: 0 },
+                      shadowOpacity: 0.3,
+                      shadowRadius: 8,
+                      elevation: 4,
+                    }}
+                  >
                     <Text className="text-white text-xs font-bold">
                       {movies?.length}
                     </Text>
@@ -116,17 +139,42 @@ const Search = () => {
         ListEmptyComponent={
           !loading && !error ? (
             <View className="mt-16 px-5 items-center">
-              <Text className="text-5xl mb-4">🔍</Text>
-              <Text className="text-center text-white text-lg font-bold">
+              <View
+                className="w-20 h-20 rounded-full bg-dark-200 border border-dark-100 items-center justify-center mb-5"
+                style={{
+                  shadowColor: "#AB8BFF",
+                  shadowOffset: { width: 0, height: 0 },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 10,
+                  elevation: 4,
+                }}
+              >
+                <Text className="text-4xl">🔍</Text>
+              </View>
+              <Text className="text-center text-white text-xl font-bold">
                 {searchQuery.trim()
                   ? "No movies found"
                   : "Discover Movies"}
               </Text>
-              <Text className="text-center text-light-300 text-sm mt-2">
+              <Text className="text-center text-light-300 text-sm mt-2.5 leading-5">
                 {searchQuery.trim()
                   ? "Try a different search term"
                   : "Start typing to search thousands of movies"}
               </Text>
+              {!searchQuery.trim() && (
+                <View className="flex-row mt-5 gap-2">
+                  {["Action", "Comedy", "Thriller"].map((genre) => (
+                    <View
+                      key={genre}
+                      className="bg-accent/15 px-3.5 py-1.5 rounded-full border border-accent/25"
+                    >
+                      <Text className="text-accent text-xs font-semibold">
+                        {genre}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              )}
             </View>
           ) : null
         }

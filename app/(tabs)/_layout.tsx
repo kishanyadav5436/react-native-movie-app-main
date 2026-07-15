@@ -21,7 +21,7 @@ function TabIcon({ focused, icon, title }: any) {
 
   return (
     <View className="size-full justify-center items-center mt-4 rounded-full">
-      <Image source={icon} tintColor="#6B7280" className="size-5" />
+      <Image source={icon} tintColor="#9CA4AB" className="size-5" />
     </View>
   );
 }
@@ -42,11 +42,16 @@ export default function TabsLayout() {
           borderRadius: 50,
           marginHorizontal: 20,
           marginBottom: 36,
-          height: 56,
+          height: 60,
           position: "absolute",
           overflow: "hidden",
           borderWidth: 1,
           borderColor: "#221F3D",
+          shadowColor: "#AB8BFF",
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.15,
+          shadowRadius: 16,
+          elevation: 12,
         },
       }}
     >
