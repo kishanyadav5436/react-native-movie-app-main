@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
-import { ImageBackground, Image, Text, View } from "react-native";
+import { ImageBackground, Image, Text, View, StyleSheet } from "react-native";
+import { BlurView } from "expo-blur";
 
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
@@ -37,8 +38,15 @@ export default function TabsLayout() {
           justifyContent: "center",
           alignItems: "center",
         },
+        tabBarBackground: () => (
+          <BlurView
+            intensity={40}
+            tint="dark"
+            style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(15, 13, 35, 0.7)", borderRadius: 50 }]}
+          />
+        ),
         tabBarStyle: {
-          backgroundColor: "#0F0D23",
+          backgroundColor: "transparent",
           borderRadius: 50,
           marginHorizontal: 20,
           marginBottom: 36,
