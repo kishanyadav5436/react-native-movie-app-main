@@ -15,14 +15,15 @@ const SearchBar = ({ placeholder, value, onChangeText, onPress }: Props) => {
 
   return (
     <View
-      className={`flex-row items-center bg-dark-200 rounded-full px-5 py-4 border ${
-        isFocused ? "border-accent/50" : "border-dark-100"
-      }`}
+      className="flex-row items-center rounded-xl px-4 py-3.5"
       style={{
-        shadowColor: isFocused ? "#AB8BFF" : "#000",
+        backgroundColor: 'rgba(15, 13, 35, 0.7)',
+        borderWidth: 1,
+        borderColor: isFocused ? '#CBC2E3' : 'rgba(34, 31, 61, 0.5)',
+        shadowColor: isFocused ? "#CBC2E3" : "#000",
         shadowOffset: { width: 0, height: isFocused ? 0 : 2 },
-        shadowOpacity: isFocused ? 0.25 : 0.2,
-        shadowRadius: isFocused ? 12 : 4,
+        shadowOpacity: isFocused ? 0.2 : 0.1,
+        shadowRadius: isFocused ? 8 : 4,
         elevation: isFocused ? 6 : 3,
       }}
     >
@@ -30,7 +31,7 @@ const SearchBar = ({ placeholder, value, onChangeText, onPress }: Props) => {
         source={icons.search}
         className="w-5 h-5"
         resizeMode="contain"
-        tintColor={isFocused ? "#C4ABFF" : "#AB8BFF"}
+        tintColor={isFocused ? "#CBC2E3" : "#938f97"}
       />
       <TextInput
         onPress={onPress}
@@ -39,8 +40,9 @@ const SearchBar = ({ placeholder, value, onChangeText, onPress }: Props) => {
         onChangeText={onChangeText}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        className="flex-1 ml-3 text-white text-base"
-        placeholderTextColor="#6B7280"
+        className="flex-1 ml-3 text-base"
+        style={{ color: '#E6E1E4' }}
+        placeholderTextColor="rgba(202, 197, 205, 0.5)"
         autoCapitalize="none"
         autoCorrect={false}
       />

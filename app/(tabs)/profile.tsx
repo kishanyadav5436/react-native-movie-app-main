@@ -1,135 +1,115 @@
 import { icons } from "@/constants/icons";
-import { images } from "@/constants/images";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+const glassStyle = {
+  backgroundColor: "rgba(15,13,35,0.7)",
+  borderWidth: 1,
+  borderColor: "rgba(34,31,61,0.5)",
+};
 
 const Profile = () => {
   return (
-    <SafeAreaView className="bg-primary flex-1">
-      <Image
-        source={images.bg}
-        className="absolute w-full z-0"
-        resizeMode="cover"
-      />
-
-      <View className="flex justify-center items-center flex-1 flex-col px-8">
-        {/* Avatar Circle with Glow */}
-        <View
-          className="w-28 h-28 rounded-full bg-dark-200 border-2 border-accent items-center justify-center mb-7"
-          style={{
-            shadowColor: "#AB8BFF",
-            shadowOffset: { width: 0, height: 0 },
-            shadowOpacity: 0.45,
-            shadowRadius: 20,
-            elevation: 10,
-          }}
-        >
-          <Image
-            source={icons.person}
-            className="size-11"
-            tintColor="#AB8BFF"
-          />
+    <SafeAreaView style={{ backgroundColor: "#030014", flex: 1 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
+        {/* Header */}
+        <View className="flex-row items-center justify-between px-6 pt-12 pb-6">
+          <View className="flex-row items-center gap-3 flex-1 pr-4">
+            <Image source={icons.logo} className="w-8 h-8" />
+            <Text
+              style={{ color: "#CBC2E3", fontSize: 32, fontWeight: "800" }}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+            >
+              Cinematic Discovery
+            </Text>
+          </View>
+          <Image source={icons.person} className="w-8 h-8" tintColor="#CBC2E3" />
         </View>
 
-        <Text
-          className="text-white text-2xl font-bold tracking-wide"
-          style={{ letterSpacing: 0.5 }}
-        >
-          Your Profile
-        </Text>
-        <Text className="text-light-300 text-sm mt-2 text-center">
-          Profile features coming soon!
-        </Text>
-
-        {/* Info Cards */}
-        <View className="w-full mt-9 gap-4">
-          <View
-            className="bg-dark-200 rounded-2xl px-5 py-5 border border-dark-100 flex-row items-center"
-            style={{
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 3 },
-              shadowOpacity: 0.3,
-              shadowRadius: 6,
-              elevation: 4,
-            }}
-          >
-            <View className="w-11 h-11 rounded-full bg-accent/15 items-center justify-center mr-4">
-              <Text className="text-xl">🎬</Text>
+        {/* Profile Section */}
+        <View className="items-center px-6 mt-4">
+          <View className="w-32 h-32 rounded-full border-2 border-[#CBC2E3] p-1 mb-4 relative">
+            <View className="flex-1 bg-[#0F0D23] rounded-full items-center justify-center">
+              <Image source={icons.person} className="w-12 h-12" tintColor="#AB8BFF" />
             </View>
-            <View className="flex-1">
-              <Text className="text-white font-bold text-sm">
-                Watched Movies
-              </Text>
-              <Text className="text-light-300 text-xs mt-1">
-                Track your viewing history
-              </Text>
-            </View>
-            <Image
-              source={icons.arrow}
-              className="size-4"
-              tintColor="#9CA4AB"
-            />
+            <TouchableOpacity className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[#CBC2E3] items-center justify-center">
+              <Text className="text-xs">✏️</Text>
+            </TouchableOpacity>
           </View>
+          <Text className="text-2xl font-bold text-white mb-1">Julian Vesper</Text>
+          <Text style={{ color: "#CAC5CD", fontSize: 14 }}>Film Aficionado & Collector</Text>
+        </View>
 
-          {/* Subtle separator */}
-          <View className="w-4/5 h-px bg-dark-100/30 self-center" />
-
-          <View
-            className="bg-dark-200 rounded-2xl px-5 py-5 border border-dark-100 flex-row items-center"
-            style={{
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 3 },
-              shadowOpacity: 0.3,
-              shadowRadius: 6,
-              elevation: 4,
-            }}
-          >
-            <View className="w-11 h-11 rounded-full bg-gold/15 items-center justify-center mr-4">
-              <Text className="text-xl">⭐</Text>
-            </View>
-            <View className="flex-1">
-              <Text className="text-white font-bold text-sm">My Ratings</Text>
-              <Text className="text-light-300 text-xs mt-1">
-                Rate and review movies
-              </Text>
-            </View>
-            <Image
-              source={icons.arrow}
-              className="size-4"
-              tintColor="#9CA4AB"
-            />
+        {/* Stats Grid */}
+        <View className="flex-row justify-between px-6 mt-8">
+          <View style={glassStyle} className="rounded-xl p-4 items-center flex-1 mx-1">
+            <Text style={{ color: "#CBC2E3", fontSize: 24, fontWeight: "bold" }}>142</Text>
+            <Text style={{ color: "#CAC5CD", fontSize: 13, textTransform: "uppercase", letterSpacing: 1.5, marginTop: 4 }}>SAVED</Text>
           </View>
-
-          {/* Subtle separator */}
-          <View className="w-4/5 h-px bg-dark-100/30 self-center" />
-
-          <View
-            className="bg-dark-200 rounded-2xl px-5 py-5 border border-dark-100 flex-row items-center"
-            style={{
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 3 },
-              shadowOpacity: 0.3,
-              shadowRadius: 6,
-              elevation: 4,
-            }}
-          >
-            <View className="w-11 h-11 rounded-full bg-light-300/15 items-center justify-center mr-4">
-              <Text className="text-xl">⚙️</Text>
-            </View>
-            <View className="flex-1">
-              <Text className="text-white font-bold text-sm">Settings</Text>
-              <Text className="text-light-300 text-xs mt-1">
-                Customize your experience
-              </Text>
-            </View>
-            <Image
-              source={icons.arrow}
-              className="size-4"
-              tintColor="#9CA4AB"
-            />
+          <View style={glassStyle} className="rounded-xl p-4 items-center flex-1 mx-1">
+            <Text style={{ color: "#CBC2E3", fontSize: 24, fontWeight: "bold" }}>48</Text>
+            <Text style={{ color: "#CAC5CD", fontSize: 13, textTransform: "uppercase", letterSpacing: 1.5, marginTop: 4 }}>REVIEWS</Text>
+          </View>
+          <View style={glassStyle} className="rounded-xl p-4 items-center flex-1 mx-1">
+            <Text style={{ color: "#CBC2E3", fontSize: 24, fontWeight: "bold" }}>1.2k</Text>
+            <Text style={{ color: "#CAC5CD", fontSize: 13, textTransform: "uppercase", letterSpacing: 1.5, marginTop: 4 }}>FOLLOWING</Text>
           </View>
         </View>
-      </View>
+
+        {/* Preferences */}
+        <View className="px-6 mt-10">
+          <Text style={{ color: "#CAC5CD", fontSize: 12, textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>Preferences</Text>
+          <View style={glassStyle} className="rounded-xl overflow-hidden">
+            <TouchableOpacity className="flex-row items-center justify-between p-4" style={{ borderBottomWidth: 1, borderBottomColor: "rgba(72,69,77,0.1)" }}>
+              <View className="flex-row items-center gap-3">
+                <Text>🔔</Text>
+                <Text style={{ color: "#CBC2E3", fontSize: 16 }}>Notifications</Text>
+              </View>
+              <Text style={{ color: "#CBC2E3" }}>{">"}</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity className="flex-row items-center justify-between p-4" style={{ borderBottomWidth: 1, borderBottomColor: "rgba(72,69,77,0.1)" }}>
+              <View className="flex-row items-center gap-3">
+                <Text>🔒</Text>
+                <Text style={{ color: "#CBC2E3", fontSize: 16 }}>Privacy & Security</Text>
+              </View>
+              <Text style={{ color: "#CBC2E3" }}>{">"}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity className="flex-row items-center justify-between p-4" style={{ borderBottomWidth: 1, borderBottomColor: "rgba(72,69,77,0.1)" }}>
+              <View className="flex-row items-center gap-3">
+                <Text>🎨</Text>
+                <Text style={{ color: "#CBC2E3", fontSize: 16 }}>App Theme</Text>
+              </View>
+              <View className="flex-row items-center gap-2">
+                <Text style={{ color: "#CAC5CD", fontSize: 14 }}>Deep Obsidian</Text>
+                <Text style={{ color: "#CBC2E3" }}>{">"}</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity className="flex-row items-center justify-between p-4">
+              <View className="flex-row items-center gap-3">
+                <Text>ℹ️</Text>
+                <Text style={{ color: "#CBC2E3", fontSize: 16 }}>About</Text>
+              </View>
+              <Text style={{ color: "#CBC2E3" }}>{">"}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Log Out */}
+        <View className="px-6 mt-8">
+          <TouchableOpacity style={glassStyle} className="rounded-xl p-4 items-center justify-center flex-row gap-2">
+            <Text>🚪</Text>
+            <Text style={{ color: "#FFB4AB", fontSize: 16, fontWeight: "bold" }}>Log Out</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={{ color: "#938f97", fontSize: 13, textAlign: "center", marginTop: 24, opacity: 0.4 }}>
+          Version 2.4.0-discovery
+        </Text>
+      </ScrollView>
     </SafeAreaView>
   );
 };

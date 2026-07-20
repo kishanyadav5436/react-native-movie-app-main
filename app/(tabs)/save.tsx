@@ -1,22 +1,22 @@
 import { icons } from "@/constants/icons";
-import { images } from "@/constants/images";
 import { View, Text, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+const glassStyle = {
+  backgroundColor: "rgba(15,13,35,0.7)",
+  borderWidth: 1,
+  borderColor: "rgba(34,31,61,0.5)",
+};
+
 const Save = () => {
   return (
-    <SafeAreaView className="bg-primary flex-1">
-      <Image
-        source={images.bg}
-        className="absolute w-full z-0"
-        resizeMode="cover"
-      />
-
+    <SafeAreaView style={{ backgroundColor: "#030014", flex: 1 }}>
       <View className="flex justify-center items-center flex-1 flex-col px-8">
-        {/* Bookmark Icon Circle with Glow */}
         <View
-          className="w-28 h-28 rounded-full bg-dark-200 border-2 border-accent items-center justify-center mb-7"
+          className="w-28 h-28 rounded-full border-2 items-center justify-center mb-7"
           style={{
+            backgroundColor: "#0F0D23",
+            borderColor: "#AB8BFF",
             shadowColor: "#AB8BFF",
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 0.4,
@@ -24,51 +24,41 @@ const Save = () => {
             elevation: 10,
           }}
         >
-          <Image source={icons.save} className="size-11" tintColor="#AB8BFF" />
+          <Image source={icons.save} className="w-11 h-11" tintColor="#AB8BFF" />
         </View>
 
         <Text
-          className="text-white text-2xl font-bold tracking-wide"
-          style={{ letterSpacing: 0.5 }}
+          style={{ color: "#CBC2E3", fontSize: 32, fontWeight: "800", letterSpacing: 0.5 }}
         >
           Saved Movies
         </Text>
-        <Text className="text-light-300 text-sm mt-2.5 text-center leading-5">
+        <Text style={{ color: "#CAC5CD", fontSize: 14, marginTop: 10, textAlign: "center", lineHeight: 20 }}>
           Your bookmarked movies will appear here.{"\n"}Start saving movies you
           want to watch later!
         </Text>
 
-        {/* Decorative dots */}
-        <View className="flex-row items-center gap-x-1.5 mt-6 mb-4">
-          <View className="w-1 h-1 rounded-full bg-accent/40" />
-          <View className="w-1.5 h-1.5 rounded-full bg-accent/60" />
-          <View className="w-2 h-2 rounded-full bg-accent" />
-          <View className="w-1.5 h-1.5 rounded-full bg-accent/60" />
-          <View className="w-1 h-1 rounded-full bg-accent/40" />
+        <View className="flex-row items-center gap-1.5 mt-6 mb-4">
+          <View className="w-1 h-1 rounded-full bg-[#AB8BFF]/40" />
+          <View className="w-1.5 h-1.5 rounded-full bg-[#AB8BFF]/60" />
+          <View className="w-2 h-2 rounded-full bg-[#AB8BFF]" />
+          <View className="w-1.5 h-1.5 rounded-full bg-[#AB8BFF]/60" />
+          <View className="w-1 h-1 rounded-full bg-[#AB8BFF]/40" />
         </View>
 
-        {/* Empty State Card */}
         <View
-          className="mt-4 bg-dark-200 rounded-3xl px-8 py-9 border border-dark-100 items-center w-full"
-          style={{
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.35,
-            shadowRadius: 10,
-            elevation: 6,
-          }}
+          className="mt-4 rounded-3xl px-8 py-9 items-center w-full"
+          style={glassStyle}
         >
           <Text className="text-5xl mb-4">🍿</Text>
-          <Text className="text-white font-bold text-base tracking-wide">
+          <Text style={{ color: "#E6E1E4", fontWeight: "bold", fontSize: 16, letterSpacing: 0.5 }}>
             No saved movies yet
           </Text>
-          <Text className="text-light-300 text-xs mt-2.5 text-center leading-4">
+          <Text style={{ color: "#CAC5CD", fontSize: 12, marginTop: 10, textAlign: "center", lineHeight: 16 }}>
             Browse movies and tap the bookmark icon to save them for later
           </Text>
 
-          {/* Suggestion pill */}
-          <View className="mt-5 bg-accent/15 px-5 py-2 rounded-full border border-accent/25">
-            <Text className="text-accent text-xs font-semibold">
+          <View className="mt-5 px-5 py-2 rounded-full" style={{ backgroundColor: "rgba(171,139,255,0.15)", borderWidth: 1, borderColor: "rgba(171,139,255,0.25)" }}>
+            <Text style={{ color: "#AB8BFF", fontSize: 12, fontWeight: "600" }}>
               Explore trending movies →
             </Text>
           </View>

@@ -4,11 +4,25 @@
 
 @layer base {
   * {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   }
 }
 
 @layer components {
+  /* Glass morphism cards - primary card style */
+  .glass-card {
+    background-color: rgba(15, 13, 35, 0.7);
+    border-width: 1px;
+    border-color: rgba(34, 31, 61, 0.5);
+  }
+
+  /* Glass panel - for overlays and interactive surfaces */
+  .glass-panel {
+    background-color: rgba(15, 13, 35, 0.7);
+    border-width: 1px;
+    border-color: rgba(34, 31, 61, 0.5);
+  }
+
   .card-glass {
     @apply bg-dark-200 rounded-2xl border border-dark-100 overflow-hidden;
   }

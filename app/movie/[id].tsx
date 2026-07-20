@@ -13,28 +13,10 @@ import { icons } from "@/constants/icons";
 import useFetch from "@/services/usefetch";
 import { fetchMovieDetails } from "@/services/api";
 
-interface MovieInfoProps {
-  label: string;
-  value?: string | number | null;
-  icon?: string;
-}
-
-const MovieInfo = ({ label, value, icon }: MovieInfoProps) => (
-  <View className="flex-col items-start justify-center mt-5">
-    <Text className="text-accent font-semibold text-xs uppercase tracking-wider">
-      {icon ? `${icon} ` : ""}{label}
-    </Text>
-    <Text className="text-light-100 font-normal text-sm mt-1.5 leading-5">
-      {value || "N/A"}
-    </Text>
-  </View>
-);
-
-const getRatingColor = (rating: string | undefined): string => {
-  const num = parseFloat(rating || "0");
-  if (num >= 7) return "#4CAF50";
-  if (num >= 5) return "#FFC107";
-  return "#F44336";
+const glassStyle = {
+  backgroundColor: "rgba(15,13,35,0.7)",
+  borderWidth: 1,
+  borderColor: "rgba(34,31,61,0.5)",
 };
 
 const Details = () => {
@@ -47,19 +29,23 @@ const Details = () => {
 
   if (loading)
     return (
-      <SafeAreaView className="bg-primary flex-1 justify-center items-center">
+      <SafeAreaView style={{ backgroundColor: "#030014", flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="#AB8BFF" />
-        <Text className="text-light-200 mt-4 text-sm">Loading details...</Text>
+        <Text style={{ color: "#CBC2E3", marginTop: 16, fontSize: 14 }}>Loading details...</Text>
       </SafeAreaView>
     );
 
-  const ratingColor = getRatingColor(movie?.imdbRating);
+  const getRating = (source: string) => {
+    const r = movie?.Ratings?.find((r: any) => r.Source === source);
+    return r ? r.Value : "N/A";
+  };
+  const rtRating = getRating("Rotten Tomatoes");
 
   return (
-    <View className="bg-primary flex-1">
-      <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
-        {/* Poster */}
-        <View>
+    <View style={{ backgroundColor: "#030014", flex: 1 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 120 }} bounces={false}>
+        {/* Hero Section */}
+        <View className="relative">
           <Image
             source={{
               uri:
@@ -67,161 +53,107 @@ const Details = () => {
                   ? movie.Poster
                   : "https://placehold.co/600x900/1a1a1a/FFFFFF.png",
             }}
-            className="w-full h-[550px]"
-            resizeMode="stretch"
+            style={{ width: "100%", height: 400 }}
+            resizeMode="cover"
           />
-
-          {/* Gradient overlay at bottom of poster */}
+          {/* Simulated gradient overlay */}
           <View
-            className="absolute bottom-0 left-0 right-0 h-32"
-            style={{
-              backgroundColor: "transparent",
-              // Simulated gradient overlay
-            }}
+            className="absolute bottom-0 left-0 right-0 h-40"
+            style={{ backgroundColor: "rgba(20,19,21,0.8)" }}
           />
 
-          <TouchableOpacity className="absolute bottom-5 right-5 rounded-full size-14 bg-accent flex items-center justify-center">
-            <Image
-              source={icons.play}
-              className="w-6 h-7 ml-1"
-              resizeMode="stretch"
-              tintColor="#fff"
-            />
-          </TouchableOpacity>
+          {/* Overlay Navigation */}
+          <SafeAreaView className="absolute top-0 left-0 right-0 flex-row justify-between px-6 pt-4">
+            <TouchableOpacity 
+              onPress={router.back}
+              className="w-10 h-10 rounded-full items-center justify-center"
+              style={glassStyle}
+            >
+              <Image source={icons.arrow} className="w-4 h-4 rotate-180" tintColor="#CBC2E3" />
+            </TouchableOpacity>
+            <TouchableOpacity 
+              className="w-10 h-10 rounded-full items-center justify-center"
+              style={glassStyle}
+            >
+              <Image source={icons.save} className="w-5 h-5" tintColor="#CBC2E3" />
+            </TouchableOpacity>
+          </SafeAreaView>
+
+          {/* Title Area */}
+          <View className="absolute bottom-6 left-6 right-6">
+            <Text style={{ color: "white", fontSize: 32, fontWeight: "800" }}>{movie?.Title}</Text>
+            <View className="flex-row items-center mt-2 flex-wrap">
+              <Text style={{ color: "#CAC5CD", fontSize: 12, textTransform: "uppercase", letterSpacing: 1 }}>{movie?.Year}</Text>
+              <Text style={{ color: "#CAC5CD", fontSize: 12, marginHorizontal: 6 }}>•</Text>
+              <Text style={{ color: "#CAC5CD", fontSize: 12, textTransform: "uppercase", letterSpacing: 1 }}>{movie?.Runtime}</Text>
+              <Text style={{ color: "#CAC5CD", fontSize: 12, marginHorizontal: 6 }}>•</Text>
+              <Text style={{ color: "#CAC5CD", fontSize: 12, textTransform: "uppercase", letterSpacing: 1 }}>{movie?.Rated}</Text>
+            </View>
+          </View>
         </View>
 
-        {/* Movie Info */}
-        <View className="flex-col items-start justify-center mt-5 px-5">
-          {/* Title */}
-          <Text className="text-white font-bold text-2xl">{movie?.Title}</Text>
-
-          {/* Year & Runtime */}
-          <View className="flex-row items-center gap-x-2 mt-2">
-            <View className="bg-dark-100 px-3 py-1 rounded-full">
-              <Text className="text-light-100 text-xs font-medium">
-                {movie?.Year}
-              </Text>
+        <View className="px-6 mt-6">
+          {/* Ratings Bar */}
+          <View className="flex-row justify-between gap-3">
+            <View style={glassStyle} className="rounded-xl p-3 flex-1 items-center">
+              <Text style={{ color: "#4CAF50", fontSize: 18, fontWeight: "bold" }}>{movie?.imdbRating || "N/A"}</Text>
+              <Text style={{ color: "#CAC5CD", fontSize: 13, marginTop: 4 }}>IMDb</Text>
             </View>
-            <View className="bg-dark-100 px-3 py-1 rounded-full">
-              <Text className="text-light-100 text-xs font-medium">
-                {movie?.Runtime}
-              </Text>
+            <View style={glassStyle} className="rounded-xl p-3 flex-1 items-center">
+              <Text style={{ color: "#4CAF50", fontSize: 18, fontWeight: "bold" }}>{rtRating}</Text>
+              <Text style={{ color: "#CAC5CD", fontSize: 13, marginTop: 4, textAlign: "center" }} numberOfLines={1}>Rotten Tomatoes</Text>
             </View>
-            <View className="bg-dark-100 px-3 py-1 rounded-full">
-              <Text className="text-light-100 text-xs font-medium">
-                {movie?.Rated}
-              </Text>
+            <View style={glassStyle} className="rounded-xl p-3 flex-1 items-center">
+              <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>{movie?.Metascore || "N/A"}</Text>
+              <Text style={{ color: "#CAC5CD", fontSize: 13, marginTop: 4 }}>Metacritic</Text>
             </View>
           </View>
 
-          {/* Rating */}
-          <View className="flex-row items-center bg-dark-200 px-4 py-2.5 rounded-xl gap-x-2 mt-4 border border-dark-100">
-            <Image source={icons.star} className="size-5" tintColor="#FFD700" />
-            <Text
-              className="font-bold text-lg"
-              style={{ color: ratingColor }}
-            >
-              {movie?.imdbRating || "N/A"}
-            </Text>
-            <Text className="text-light-300 text-sm">/10</Text>
-            <View className="w-px h-4 bg-dark-100 mx-1" />
-            <Text className="text-light-300 text-xs">
-              {movie?.imdbVotes || "0"} votes
+          {/* Metadata Chips */}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mt-6 flex-row" contentContainerStyle={{ gap: 12 }}>
+            <View style={glassStyle} className="rounded-full px-4 py-2 flex-row items-center">
+              <Text className="mr-2">💰</Text>
+              <Text style={{ color: "#E6E1E4", fontSize: 13 }}>{movie?.BoxOffice || "N/A"}</Text>
+            </View>
+            <View style={glassStyle} className="rounded-full px-4 py-2 flex-row items-center">
+              <Text className="mr-2">🏆</Text>
+              <Text style={{ color: "#E6E1E4", fontSize: 13 }}>{movie?.Awards || "N/A"}</Text>
+            </View>
+          </ScrollView>
+
+          {/* Plot Summary */}
+          <View className="mt-8">
+            <Text style={{ color: "#CBC2E3", fontSize: 18, fontWeight: "600", marginBottom: 8 }}>Plot Summary</Text>
+            <Text style={{ color: "#CAC5CD", fontSize: 14, lineHeight: 22 }}>
+              {movie?.Plot || "No plot summary available."}
             </Text>
           </View>
-
-          {/* Genres as pills */}
-          {movie?.Genre && (
-            <View className="flex-row flex-wrap gap-2 mt-4">
-              {movie.Genre.split(", ").map((genre, i) => (
-                <View
-                  key={i}
-                  className="bg-accent/20 px-3 py-1.5 rounded-full border border-accent/30"
-                >
-                  <Text className="text-accent text-xs font-semibold">
-                    {genre}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          )}
-
-          {/* Divider */}
-          <View className="w-full h-px bg-dark-100 mt-6" />
-
-          {/* Plot */}
-          <MovieInfo label="Plot" value={movie?.Plot} icon="📝" />
-
-          {/* Divider */}
-          <View className="w-full h-px bg-dark-100 mt-5" />
 
           {/* Cast & Crew */}
-          <MovieInfo label="Director" value={movie?.Director} icon="🎬" />
-          <MovieInfo label="Actors" value={movie?.Actors} icon="🎭" />
-          <MovieInfo label="Writer" value={movie?.Writer} icon="✍️" />
-
-          {/* Divider */}
-          <View className="w-full h-px bg-dark-100 mt-5" />
-
-          {/* Additional Info Row */}
-          <View className="flex-row justify-between w-full">
-            <View className="flex-1">
-              <MovieInfo label="Box Office" value={movie?.BoxOffice || "N/A"} icon="💰" />
+          <View className="mt-8">
+            <Text style={{ color: "#CBC2E3", fontSize: 18, fontWeight: "600", marginBottom: 12 }}>Cast & Crew</Text>
+            <View className="mb-4">
+              <Text style={{ color: "#AB8BFF", fontSize: 12, textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 }}>Director</Text>
+              <Text style={{ color: "#E6E1E4", fontSize: 14 }}>{movie?.Director || "N/A"}</Text>
             </View>
-            <View className="flex-1">
-              <MovieInfo label="Awards" value={movie?.Awards} icon="🏆" />
+            <View className="mb-4">
+              <Text style={{ color: "#AB8BFF", fontSize: 12, textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 }}>Actors</Text>
+              <Text style={{ color: "#E6E1E4", fontSize: 14 }}>{movie?.Actors || "N/A"}</Text>
             </View>
           </View>
-
-          <View className="flex-row justify-between w-full">
-            <View className="flex-1">
-              <MovieInfo label="Country" value={movie?.Country} icon="🌍" />
-            </View>
-            <View className="flex-1">
-              <MovieInfo label="Language" value={movie?.Language} icon="🗣️" />
-            </View>
-          </View>
-
-          {/* Other Ratings */}
-          {movie?.Ratings && movie.Ratings.length > 0 && (
-            <>
-              <View className="w-full h-px bg-dark-100 mt-5" />
-              <Text className="text-accent font-semibold text-xs uppercase tracking-wider mt-5">
-                ⭐ Other Ratings
-              </Text>
-              <View className="flex-row flex-wrap gap-3 mt-3">
-                {movie.Ratings.map((rating, i) => (
-                  <View
-                    key={i}
-                    className="bg-dark-200 px-4 py-3 rounded-xl border border-dark-100 items-center"
-                  >
-                    <Text className="text-white font-bold text-sm">
-                      {rating.Value}
-                    </Text>
-                    <Text className="text-light-300 text-xs mt-1">
-                      {rating.Source.replace("Internet Movie Database", "IMDb")}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            </>
-          )}
         </View>
       </ScrollView>
 
-      {/* Go Back Button */}
-      <TouchableOpacity
-        className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-2xl py-4 flex flex-row items-center justify-center z-50"
-        onPress={router.back}
-        activeOpacity={0.8}
-      >
-        <Image
-          source={icons.arrow}
-          className="size-5 mr-2 mt-0.5 rotate-180"
-          tintColor="#fff"
-        />
-        <Text className="text-white font-bold text-base">Go Back</Text>
-      </TouchableOpacity>
+      {/* Bottom CTA */}
+      <View className="absolute bottom-0 left-0 right-0 px-6 pb-8 pt-4 flex-row gap-4" style={{ backgroundColor: "#141315" }}>
+        <TouchableOpacity className="flex-1 h-14 rounded-xl flex-row items-center justify-center" style={{ backgroundColor: "#CBC2E3" }}>
+          <Image source={icons.play} className="w-5 h-5 mr-2" tintColor="#141315" />
+          <Text style={{ color: "#141315", fontWeight: "bold", fontSize: 16 }}>Watch Now</Text>
+        </TouchableOpacity>
+        <TouchableOpacity className="w-14 h-14 rounded-xl items-center justify-center" style={glassStyle}>
+          <Text style={{ color: "#CBC2E3", fontSize: 24 }}>+</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

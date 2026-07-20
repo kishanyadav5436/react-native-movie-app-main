@@ -5,6 +5,7 @@ import {
   ScrollView,
   Image,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
 
@@ -15,7 +16,6 @@ import { getTrendingMovies } from "@/services/appwrite";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 
-import SearchBar from "@/components/SearchBar";
 import MovieCard from "@/components/MovieCard";
 import TrendingCard from "@/components/TrendingCard";
 
@@ -35,21 +35,25 @@ const Index = () => {
   } = useFetch(() => fetchMovies({ query: "" }));
 
   return (
-    <View className="flex-1 bg-primary">
-      <Image
-        source={images.bg}
-        className="absolute w-full z-0"
-        resizeMode="cover"
-      />
+    <View className="flex-1 bg-primary" style={{ paddingTop: 60 }}>
+      {/* Fixed Header */}
+      <View className="flex-row items-center justify-between px-5 pb-4">
+        <View className="flex-row items-center">
+          <Image source={icons.logo} className="w-8 h-8" resizeMode="contain" />
+          <Text className="text-[32px] font-extrabold text-[#CBC2E3] tracking-tight ml-2">
+            Discovery
+          </Text>
+        </View>
+        <TouchableOpacity>
+          <Image source={icons.person} className="w-6 h-6" tintColor="#CAC5CD" />
+        </TouchableOpacity>
+      </View>
 
       <ScrollView
         className="flex-1 px-5"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
+        contentContainerStyle={{ minHeight: "100%", paddingBottom: 100 }}
       >
-        {/* Logo */}
-        <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
-
         {moviesLoading || trendingLoading ? (
           <View className="flex-1 justify-center items-center mt-20">
             <View
@@ -83,8 +87,7 @@ const Index = () => {
                 elevation: 8,
               }}
             >
-              <Text className="text-6xl mb-5">🎬</Text>
-              <Text className="text-white text-xl font-bold text-center">
+              <Text className="text-white text-xl font-bold text-center mt-5">
                 Oops! Something went wrong
               </Text>
               <Text className="text-light-300 text-sm text-center mt-3 leading-5">
@@ -99,21 +102,29 @@ const Index = () => {
           </View>
         ) : (
           <View className="flex-1 mt-5">
-            <SearchBar
-              onPress={() => {
-                router.push("/search");
-              }}
-              placeholder="Search for a movie"
-            />
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => router.push("/search")}
+              className="flex-row items-center bg-[rgba(15,13,35,0.7)] border border-[rgba(34,31,61,0.5)] rounded-xl px-4 py-3"
+            >
+              <Image source={icons.search} className="w-5 h-5" tintColor="#CAC5CD" />
+              <Text className="text-[#CAC5CD] text-base ml-3">
+                Search movies, actors, directors...
+              </Text>
+            </TouchableOpacity>
 
             {/* Trending Section */}
             {trendingMovies && (
               <View className="mt-10">
-                <View className="flex-row items-center mb-3">
-                  <Text className="text-xl text-white font-bold tracking-wide">
-                    🔥 Trending Movies
+                <View className="flex-row items-center justify-between mb-3">
+                  <Text className="text-[24px] text-white font-bold">
+                    Trending Now
                   </Text>
-                  <View className="flex-1 h-px bg-dark-100/40 ml-4" />
+                  <TouchableOpacity>
+                    <Text className="text-[#CBC2E3] text-[12px] uppercase tracking-wide">
+                      SEE ALL
+                    </Text>
+                  </TouchableOpacity>
                 </View>
                 <FlatList
                   horizontal
@@ -135,17 +146,14 @@ const Index = () => {
             {/* Latest Movies Section */}
             <>
               <View className="flex-row items-center justify-between mt-5 mb-3">
-                <View className="flex-row items-center flex-1">
-                  <Text className="text-xl text-white font-bold tracking-wide">
-                    🎬 Latest Movies
+                <Text className="text-[24px] text-white font-bold">
+                  Latest Releases
+                </Text>
+                <TouchableOpacity>
+                  <Text className="text-[#CBC2E3] text-[12px] uppercase tracking-wide">
+                    VIEW ALL
                   </Text>
-                  <View className="flex-1 h-px bg-dark-100/40 ml-4" />
-                </View>
-                <View className="bg-accent/15 rounded-full px-3 py-1 ml-3 border border-accent/25">
-                  <Text className="text-accent text-xs font-bold">
-                    {movies?.length || 0}
-                  </Text>
-                </View>
+                </TouchableOpacity>
               </View>
 
               <FlatList
